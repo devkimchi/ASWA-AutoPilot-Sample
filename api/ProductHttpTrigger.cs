@@ -30,7 +30,7 @@ namespace Api
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: ContentTypes.ApplicationJson, bodyType: typeof(Response), Description = "The OK response")]
         public async Task<IActionResult> GetProductsByCategory(
             [HttpTrigger(AuthorizationLevel.Anonymous, HttpVerbs.GET, Route = "products/{category}")] HttpRequest req,
-            [CosmosDB(databaseName: "AdventureWorks", collectionName: "products", ConnectionStringSetting = "ConnectionStrings_CosmosDB",
+            [CosmosDB(databaseName: "AdventureWorks", containerName: "products", Connection = "ConnectionStrings_CosmosDB",
                       SqlQuery = "SELECT * FROM c WHERE c.category = {category}")] IEnumerable<Product> products)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");

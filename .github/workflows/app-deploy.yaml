@@ -55,12 +55,12 @@ jobs:
     #     dotnet publish . -c Release -o published
     #     popd
 
-    - name: Publish API
-      shell: bash
-      run: |
-        pushd ${{ inputs.api_location }}
-        dotnet publish . -c Release -o published
-        popd
+    # - name: Publish API
+    #   shell: bash
+    #   run: |
+    #     pushd ${{ inputs.api_location }}
+    #     dotnet publish . -c Release -o published
+    #     popd
 
     - name: Deploy Static Web App 
       uses: Azure/static-web-apps-deploy@v1
