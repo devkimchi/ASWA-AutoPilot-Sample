@@ -33,12 +33,29 @@ jobs:
       with:
         submodules: true
 
+    - name: Set up .NET 6 SDK
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.x'
+
+    - name: Restore NuGet packages
+      shell: bash
+      run: |
+        dotnet restore .
+
+    - name: Build solution
+      shell: bash
+      run: |
+        dotnet build . -c Release
+
     - name: Deploy Static Web App 
       uses: Azure/static-web-apps-deploy@v1
       with:
         azure_static_web_apps_api_token: ${{ secrets.aswa_token }}
         repo_token: ${{ secrets.gh_token }} # Used for Github integrations (i.e. PR comments)
         action: upload
+        skip_app_build: true
+        skip_api_build: true
         ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
         # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
         app_location: ${{ inputs.app_location }} # App source code path
