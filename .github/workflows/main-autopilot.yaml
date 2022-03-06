@@ -1,0 +1,88 @@
+name: 'Autopilot'
+
+on:
+  workflow_dispatch:
+    inputs:
+      resourceName:
+        type: string
+        description: 'Resource name'
+        required: true
+      location:
+        type: choice
+        description: 'Cosmos DB location. Default is "Korea Central"'
+        required: false
+        options:
+        - 'Australia Central'
+        - 'Australia East'
+        - 'Australia Southeast'
+        - 'Brazil South'
+        - 'Canada Central'
+        - 'Canada East'
+        - 'Central India'
+        - 'Central US'
+        - 'East Asia'
+        - 'East US'
+        - 'East US 2'
+        - 'France Central'
+        - 'Germany West Central'
+        - 'Japan East'
+        - 'Japan West'
+        - 'Jio India West'
+        - 'Korea Central'
+        - 'Korea South'
+        - 'North Central US'
+        - 'North Europe'
+        - 'Norway East'
+        - 'South Africa North'
+        - 'South Central US'
+        - 'South India'
+        - 'Southeast Asia'
+        - 'Sweden Central'
+        - 'Switzerland North'
+        - 'UAE North'
+        - 'UK South'
+        - 'UK West'
+        - 'West Central US'
+        - 'West Europe'
+        - 'West India'
+        - 'West US'
+        - 'West US 2'
+        - 'West US 3'
+        default: 'Korea Central'
+      staticWebAppLocation:
+        type: choice
+        description: 'Static Web App location. Default is "East Asia".'
+        required: false
+        options:
+        - 'Central US'
+        - 'East Asia'
+        - 'East US 2'
+        - 'West Europe'
+        - 'West US 2'
+        default: 'East Asia'
+
+jobs:
+  call_resource_provisioning:
+    uses: devkimchi/ASWA-AutoPilot-Sample/.github/workflows/resource-provision.yaml@main
+    with:
+      job_name: 'Provision Resources'
+      resource_name: ${{ github.event.inputs.resourceName }}
+      cosdba_location: ${{ github.event.inputs.location }}
+      sttapp_location:  ${{ github.event.inputs.staticWebAppLocation }}
+    secrets:
+      pa_token: ${{ secrets.PA_TOKEN }}
+      az_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+  call_workflow_dispatch:
+    needs: call_resource_provisioning
+    name: 'Deploy Static Web App'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Invoke workflow with inputs
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: 'App Deploy Dispatch'
+        token: ${{ secrets.PA_TOKEN }}
+        inputs: '{ "jobName": "Deploy Static Web App", "appLocation": "app", "apiLocation": "api", "outputLocation": "wwwroot" }'

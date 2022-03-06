@@ -1,0 +1,47 @@
+name: 'App Deploy'
+
+on:
+  workflow_call:
+    inputs:
+      job_name:
+        type: string
+        required: true
+      app_location:
+        type: string
+        required: true
+      api_location:
+        type: string
+        required: true
+      output_location:
+        type: string
+        required: true
+    secrets:
+      gh_token:
+        required: true
+      aswa_token:
+        required: true
+
+jobs:
+  deploy:
+    name: ${{ inputs.job_name }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Deploy Static Web App 
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.aswa_token }}
+        repo_token: ${{ secrets.gh_token }} # Used for Github integrations (i.e. PR comments)
+        action: upload
+        ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+        # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+        app_location: ${{ inputs.app_location }} # App source code path
+        api_location: ${{ inputs.api_location }} # Api source code path - optional
+        output_location: ${{ inputs.output_location }} # Built app content directory - optional
+        ###### End of Repository/Build Configurations ######
