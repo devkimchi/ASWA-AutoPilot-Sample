@@ -104,17 +104,6 @@ resource cosdbasqlcontainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
     }
 }
 
-resource cosdbasqlcontainersp 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15' = {
-    name: '${cosdbasqlcontainer.name}/helloworld'
-    properties: {
-        resource: {
-            id: 'helloworld'
-            body: 'function () { var context = getContext(); var response = context.getResponse(); response.setBody(\'Hello, World from Cosmos DB\'); }'
-        }
-    }
-}
-
-
 output id string = cosdba.id
 output name string = cosdba.name
 output connectionString string = 'AccountEndpoint=https://${cosdba.name}.documents.azure.com:443/;AccountKey=${cosdba.listKeys().primaryMasterKey};'
