@@ -6,25 +6,38 @@
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<p>Welcome to your new app.</p>
 
-@if (string.IsNullOrWhiteSpace(this.Message))
+@if (string.IsNullOrWhiteSpace(this.Greeting))
 {
     <p>Loading...</p>
 }
 else
 {
-    <p style="color: red;">@this.Message</p>
+    <p style="color: red;">@this.Greeting</p>
+}
+
+@if (string.IsNullOrWhiteSpace(this.Products))
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p style="color: blue;">@this.Products</p>
 }
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @code {
-    protected string? Message { get; set; }
+    protected string? Greeting { get; set; }
+    protected string? Products { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
-        var response = await this.Proxy.PingAsync("ASWA Autopilot").ConfigureAwait(false);
-        this.Message = response.Message;
+        var greetings = await this.Proxy.PingAsync("ASWA Autopilot").ConfigureAwait(false);
+        this.Greeting = greetings.Message;
+
+        var products = await this.Proxy.GetProductsByCategoryAsync("pet").ConfigureAwait(false);
+        this.Products = products.Message;
     }
 }

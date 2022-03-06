@@ -48,9 +48,4 @@ namespace Api
             return new OkObjectResult(response);
         }
     }
-
-    public class Response
-    {
-        public string Message { get; set; }
-    }
 }
