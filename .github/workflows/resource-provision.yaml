@@ -1,0 +1,66 @@
+name: 'Resource Provision'
+
+on:
+  workflow_call:
+    inputs:
+      job_name:
+        type: string
+        required: true
+      resource_name:
+        type: string
+        required: true
+      cosdba_location:
+        type: string
+        required: true
+      sttapp_location:
+        type: string
+        required: true
+    secrets:
+      pa_token:
+        required: true
+      az_credentials:
+        required: true
+
+jobs:
+  deploy:
+    name: ${{ inputs.job_name }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Login to Azure
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.az_credentials }}
+
+    - name: Provision resources
+      id: provisioned
+      shell: pwsh
+      run: |
+        cd ./infra
+
+        $result = ./Provision-Resources.ps1 `
+          -ResourceName "${{ inputs.resource_name}}" `
+          -Location "${{ inputs.cosdba_location }}" `
+          -CosmosDbPrimaryRegion "${{ inputs.cosdba_location }}" `
+          -StaticWebAppLocation "${{ inputs.sttapp_location }}" `
+          -TargetScope Subscription
+
+        $provisioned = $result | ConvertFrom-Json
+        $deploymentKey = $provisioned.properties.outputs.sttappDeploymentKey.value
+
+        echo "::add-mask::$deploymentKey"
+        echo "::set-output name=sttapp_deploymentkey::$deploymentKey"
+
+    - name: Update GitHub repository secrets
+      uses: hmanzur/actions-set-secret@v2.0.0
+      with:
+        token: ${{ secrets.pa_token }}
+        repository: ${{ github.repository }}
+        name: AZURE_STATIC_WEB_APPS_API_TOKEN
+        value: ${{ steps.provisioned.outputs.sttapp_deploymentkey }}

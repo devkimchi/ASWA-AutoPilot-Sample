@@ -1,0 +1,36 @@
+name: 'App Deploy Dispatch'
+
+on:
+  workflow_dispatch:
+    inputs:
+      jobName:
+        type: string
+        description: Job name
+        required: true
+      appLocation:
+        type: string
+        description: Web app location
+        required: false
+        default: "app"
+      apiLocation:
+        type: string
+        description: API app location
+        required: false
+        default: "api"
+      outputLocation:
+        type: string
+        description: Web app artifact location
+        required: false
+        default: ""
+
+jobs:
+  call_app_deploy:
+    uses: devkimchi/ASWA-AutoPilot-Sample/.github/workflows/app-deploy.yaml@main
+    with:
+      job_name: ${{ github.event.inputs.jobName }}
+      app_location: ${{ github.event.inputs.appLocation }}
+      api_location: ${{ github.event.inputs.apiLocation }}
+      output_location: ${{ github.event.inputs.outputLocation }}
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      aswa_token: '${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}'
