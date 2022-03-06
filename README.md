@@ -1,6 +1,6 @@
 # ASWA AutoPilot Sample #
 
-This provides sample GitHub Actions workflows and Bicep files for devs to autopilot Azure Static Web Apps from resource provisioning to app deployment in one-click.
+This provides sample GitHub Actions workflows and Bicep files for devs to autopilot Azure Static Web Apps from resource provisioning to app deployment in just one mouse click.
 
 
 ## Getting Started ##
@@ -29,7 +29,7 @@ To run this autopilot through GitHub Actions, you need to add the following two 
 * `PA_TOKEN` for Azure Static Web App deployment
   * For more details, read [this document](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
-One both secrets are ready, then follow the steps below:
+Once both secrets are ready, then follow the steps below:
 
 ![GitHub Actions Autopilot](./images/autopilot.png)
 
