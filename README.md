@@ -19,6 +19,10 @@ Then, run the following PowerShell script to deploy the app:
 
 > **NOTE**: You need [GitHub CLI](https://cli.github.com) to run the PowerShell script.
 
+OH WAIT! IT'S TWO STEPS!
+
+Don't worry. Here's another one for you.
+
 
 ### Auto-Pilot via GitHub Actions ###
 
