@@ -20,8 +20,8 @@ jobs:
     uses: devkimchi/ASWA-AutoPilot-Sample/.github/workflows/app-deploy.yaml@main
     with:
       job_name: 'Deploy Static Web App'
-      app_location: 'app'
-      api_location: 'api'
+      # app_location: 'app'
+      # api_location: 'api'
       output_location: 'wwwroot'
     secrets:
       gh_token: ${{ secrets.GITHUB_TOKEN }}
