@@ -10,6 +10,37 @@
     }
   ],
   "paths": {
+    "/products/{category}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "operationId": "GetProductsByCategory",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "The **Category** parameter",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The OK response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ping": {
       "get": {
         "tags": [

@@ -26,10 +26,10 @@ param cosdbaEnableServerless bool = true
 ])
 param cosdbaBackupStorageRedundancy string = 'Local'
 
-param cosdbaDatabaseName string = 'ACS'
-param cosdbaContainerName string = 'users'
+param cosdbaDatabaseName string = 'AdventureWorks'
+param cosdbaContainerName string = 'products'
 param cosdbaPartitionKeyPaths array = [
-    '/id'
+    '/category'
 ]
 
 var capabilities = cosdbaEnableServerless ? [
@@ -103,6 +103,17 @@ resource cosdbasqlcontainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
         }
     }
 }
+
+resource cosdbasqlcontainersp 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15' = {
+    name: '${cosdbasqlcontainer.name}/helloworld'
+    properties: {
+        resource: {
+            id: 'helloworld'
+            body: 'function () { var context = getContext(); var response = context.getResponse(); response.setBody(\'Hello, World from Cosmos DB\'); }'
+        }
+    }
+}
+
 
 output id string = cosdba.id
 output name string = cosdba.name
