@@ -48,12 +48,12 @@ jobs:
       run: |
         dotnet build . -c Release
 
-    - name: Publish App
-      shell: bash
-      run: |
-        pushd ${{ inputs.app_location }}
-        dotnet publish . -c Release -o published
-        popd
+    # - name: Publish App
+    #   shell: bash
+    #   run: |
+    #     pushd ${{ inputs.app_location }}
+    #     dotnet publish . -c Release -o published
+    #     popd
 
     - name: Publish API
       shell: bash
@@ -68,11 +68,11 @@ jobs:
         azure_static_web_apps_api_token: ${{ secrets.aswa_token }}
         repo_token: ${{ secrets.gh_token }} # Used for Github integrations (i.e. PR comments)
         action: upload
-        skip_app_build: true
+        # skip_app_build: true
         skip_api_build: true
         ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
         # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-        app_location: ${{ inputs.app_location }}/published # App source code path
+        app_location: ${{ inputs.app_location }} # App source code path
         api_location: ${{ inputs.api_location }}/published # Api source code path - optional
         output_location: ${{ inputs.output_location }} # Built app content directory - optional
         ###### End of Repository/Build Configurations ######
