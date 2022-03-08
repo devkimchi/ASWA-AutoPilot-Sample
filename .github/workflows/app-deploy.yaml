@@ -5,16 +5,20 @@ on:
     inputs:
       job_name:
         type: string
-        required: true
+        required: false
+        default: 'Deploy Static Web App'
       app_location:
         type: string
-        required: true
+        required: false
+        default: app
       api_location:
         type: string
-        required: true
+        required: false
+        default: api
       output_location:
         type: string
-        required: true
+        required: false
+        default: wwwroot
     secrets:
       gh_token:
         required: true

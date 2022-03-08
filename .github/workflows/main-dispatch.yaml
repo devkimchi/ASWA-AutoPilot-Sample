@@ -6,22 +6,23 @@ on:
       jobName:
         type: string
         description: Job name
-        required: true
+        required: false
+        default: 'Deploy Static Web App'
       appLocation:
         type: string
         description: Web app location
         required: false
-        default: "app"
+        default: app
       apiLocation:
         type: string
         description: API app location
         required: false
-        default: "api"
+        default: api
       outputLocation:
         type: string
         description: Web app artifact location
         required: false
-        default: ""
+        default: wwwroot
 
 jobs:
   call_app_deploy:
