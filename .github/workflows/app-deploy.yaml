@@ -37,20 +37,20 @@ jobs:
       with:
         submodules: true
 
-    - name: Set up .NET 6 SDK
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: '6.x'
+    # - name: Set up .NET 6 SDK
+    #   uses: actions/setup-dotnet@v2
+    #   with:
+    #     dotnet-version: '6.x'
 
-    - name: Restore NuGet packages
-      shell: bash
-      run: |
-        dotnet restore .
+    # - name: Restore NuGet packages
+    #   shell: bash
+    #   run: |
+    #     dotnet restore .
 
-    - name: Build solution
-      shell: bash
-      run: |
-        dotnet build . -c Release
+    # - name: Build solution
+    #   shell: bash
+    #   run: |
+    #     dotnet build . -c Release
 
     # - name: Publish App
     #   shell: bash
