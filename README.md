@@ -1,6 +1,6 @@
 # ASWA AutoPilot Sample #
 
-This provides sample GitHub Actions workflows and Bicep files for devs to autopilot Azure Static Web Apps from resource provisioning to app deployment in just one mouse click.
+This provides sample GitHub Actions workflows and Bicep files for devs to autopilot [Azure Static Web Apps](https://docs.microsoft.com/azure/static-web-apps/overview?WT.mc_id=dotnet-59944-juyoo) from resource provisioning to app deployment in just one mouse click.
 
 
 ## Getting Started ##
