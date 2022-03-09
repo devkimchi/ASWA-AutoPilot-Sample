@@ -5,16 +5,19 @@ on:
     inputs:
       job_name:
         type: string
-        required: true
+        required: false
+        default: 'Provision Resources'
       resource_name:
         type: string
         required: true
       cosdba_location:
         type: string
-        required: true
+        required: false
+        default: 'Korea Central'
       sttapp_location:
         type: string
-        required: true
+        required: false
+        default: 'East Asia'
     secrets:
       pa_token:
         required: true
